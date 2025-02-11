@@ -1,0 +1,94 @@
+(3) Here’s an extended set of ISO 20022 compliance test cases, now covering cross-border payments, domestic clearing, and securities processing in addition to general message validation.
+
+1. Cross-Border Payments (pacs.008, pacs.009, camt.056, camt.029, pain.002)
+
+Objective: Ensure compliance with international payment processing rules, SWIFT CBPR+ (ISO 20022 for cross-border payments), and regulatory requirements.
+
+1.1 Message Validation
+
+✅ CBP-001: Validate a correct pacs.008 (FI-to-FI Credit Transfer) against the ISO 20022 schema.
+❌ CBP-002: Send a pacs.008 with an invalid BIC (SWIFT code) and verify rejection.
+❌ CBP-003: Enter an incorrect currency code (e.g., USD for an EU-based transaction) and check system response.
+
+1.2 Transaction Screening & AML Compliance
+
+✅ CBP-004: Process a low-value cross-border payment below AML thresholds successfully.
+❌ CBP-005: Attempt a high-value transaction that requires additional AML verification and ensure it is flagged.
+❌ CBP-006: Process a transaction to a sanctioned entity and verify rejection with camt.056 (payment cancellation request).
+❌ CBP-007: Send a transaction with an incomplete originator/beneficiary address and confirm rejection.
+
+1.3 FX & Multi-Currency Handling
+
+✅ CBP-008: Process a payment where the source currency is EUR, and the beneficiary receives USD, ensuring FX conversion is accurate.
+❌ CBP-009: Send a transaction with an unsupported currency pair and verify failure.
+
+1.4 Intermediary Bank Handling
+
+✅ CBP-010: Verify a pacs.009 (cover payment) is processed correctly when an intermediary bank is involved.
+❌ CBP-011: Simulate missing intermediary bank details and ensure rejection or return with camt.029.
+
+1.5 Payment Status & Returns
+
+✅ CBP-012: Validate a correct pacs.002 (payment status) response for a successful transaction.
+❌ CBP-013: Trigger a pacs.002 with RJCT status due to incorrect account details.
+✅ CBP-014: Process a camt.056 (payment cancellation request) and ensure the original payment is blocked before settlement.
+❌ CBP-015: Attempt to cancel a settled payment using camt.056 and verify failure with camt.029 (unable to apply).
+
+2. Domestic Clearing & Real-Time Payments (pacs.008, pacs.004, camt.054, pain.001, pain.002)
+
+Objective: Ensure compatibility with local clearing systems (ACH, SEPA, FedNow, RTP) and compliance with ISO 20022-based domestic payment formats.
+
+2.1 Payment Initiation & Batch Processing
+
+✅ DCP-001: Process a valid pain.001 (payment initiation) message for a single SEPA Credit Transfer.
+✅ DCP-002: Submit a bulk pain.001 with 1,000 transactions and ensure all are processed successfully.
+❌ DCP-003: Send a pain.001 with incorrect local clearing codes and verify rejection.
+
+2.2 SEPA Instant Credit Transfer (SCT Inst)
+
+✅ DCP-004: Process a valid pacs.008 for an instant payment within 10 seconds.
+❌ DCP-005: Attempt an SCT Inst transfer with a bank that does not support real-time payments and ensure rejection.
+
+2.3 Direct Debit Handling
+
+✅ DCP-006: Process a valid pain.008 (SEPA Direct Debit) and confirm transaction execution.
+❌ DCP-007: Attempt to debit an account without a mandate reference and verify rejection.
+
+2.4 Payment Returns & Reversals
+
+✅ DCP-008: Simulate a pacs.004 (payment return) and verify funds are credited back to the sender.
+❌ DCP-009: Process a return without a valid reason code and confirm system rejection.
+
+2.5 Reconciliation & Reporting
+
+✅ DCP-010: Validate that camt.054 (debit/credit notification) reflects the correct transaction details.
+❌ DCP-011: Test a camt.054 with incorrect transaction references and verify reconciliation failure.
+
+3. Securities Processing (sese.023, sese.025, semt.002, camt.060)
+
+Objective: Ensure compliance with ISO 20022 securities messaging for trade settlements, asset servicing, and reconciliation.
+
+3.1 Trade Settlement Processing
+
+✅ SEC-001: Process a correct sese.023 (securities settlement instruction) and verify successful settlement.
+❌ SEC-002: Send a sese.023 with a mismatched ISIN (International Securities Identification Number) and ensure rejection.
+✅ SEC-003: Validate a successful sese.025 (securities settlement confirmation) message.
+❌ SEC-004: Attempt to settle a trade outside market hours and verify rejection.
+
+3.2 Corporate Actions Processing
+
+✅ SEC-005: Process a seev.031 (corporate action notification) for a dividend payment.
+❌ SEC-006: Simulate incorrect tax withholding details in a dividend event and verify rejection.
+
+3.3 Reconciliation & Statement Reporting
+
+✅ SEC-007: Validate a correct semt.002 (securities balance report) and ensure positions are accurate.
+❌ SEC-008: Send an incorrect semt.002 with duplicate transactions and verify reconciliation failure.
+✅ SEC-009: Process a camt.060 (securities reconciliation report) and confirm matching balances.
+
+4. Additional Edge Cases
+
+✅ EDGE-001: Validate ISO 20022 message conversion to/from legacy MT5xx securities messages.
+❌ EDGE-002: Attempt to submit an outdated message version and ensure rejection.
+✅ EDGE-003: Simulate a system outage during message processing and verify system recovery.
+❌ EDGE-004: Test message processing with large batch files (1M transactions) and measure performance.

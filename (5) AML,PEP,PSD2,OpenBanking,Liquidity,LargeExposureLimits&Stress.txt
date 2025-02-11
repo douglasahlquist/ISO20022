@@ -1,0 +1,82 @@
+(5) Here’s an expanded set of ISO 20022 test cases to validate compliance with AML (Anti-Money Laundering), PSD2 (Revised Payment Services Directive), and Basel III (Capital & Liquidity Requirements).
+
+1. Anti-Money Laundering (AML) Compliance
+
+Objective: Ensure ISO 20022 messages comply with global AML regulations (FATF, EU AMLD, FinCEN).
+
+1.1 Sanctions Screening
+
+✅ AML-001: Process a valid pacs.008 (FI-to-FI transfer) where the beneficiary is not on any sanctions list.
+❌ AML-002: Send a pacs.008 with a beneficiary flagged on an OFAC/EU Sanctions List and verify rejection.
+
+1.2 High-Risk Jurisdiction Transactions
+
+✅ AML-003: Process a payment from a low-risk jurisdiction successfully.
+❌ AML-004: Attempt a transaction from a high-risk country (e.g., FATF blacklist) and verify automatic flagging.
+
+1.3 Structuring & Smurfing Detection
+
+❌ AML-005: Attempt to split a $1,000,000 payment into ten smaller $99,999 transactions and ensure detection.
+
+1.4 Unusual Payment Patterns
+
+❌ AML-006: Detect an unusually high-value transfer from an account with no prior large transactions.
+❌ AML-007: Attempt a transaction from an account showing multiple daily international transfers exceeding risk thresholds.
+
+1.5 PEP & UBO Screening
+
+✅ AML-008: Process a valid camt.052 (account statement) for a customer not identified as a Politically Exposed Person (PEP).
+❌ AML-009: Identify and reject a transaction where the Ultimate Beneficial Owner (UBO) is a PEP flagged for risk.
+
+2. PSD2 (Revised Payment Services Directive - EU)
+
+Objective: Ensure ISO 20022 messages comply with Strong Customer Authentication (SCA), Open Banking, and Payment Security requirements.
+
+2.1 Strong Customer Authentication (SCA)
+
+✅ PSD2-001: Process a pain.001 (credit transfer) with two-factor authentication (2FA) successfully.
+❌ PSD2-002: Attempt a pain.001 without proper authentication and verify system rejection.
+
+2.2 Open Banking (Third-Party Access)
+
+✅ PSD2-003: Validate a pain.013 (Request for Payment) from a Third-Party Provider (TPP) with proper authorization.
+❌ PSD2-004: Attempt a pain.013 from an unauthorized TPP and ensure rejection.
+
+2.3 Transaction Risk Analysis (TRA) Exemptions
+
+✅ PSD2-005: Process a low-value SEPA payment (€30) with SCA exemption.
+❌ PSD2-006: Attempt a high-value cross-border transfer (€20,000) without SCA and verify rejection.
+
+2.4 Fraud Detection & Monitoring
+
+✅ PSD2-007: Process a pacs.008 where the payer and payee have a transaction history.
+❌ PSD2-008: Detect a transaction where the payer has never transacted with the recipient before and flag for review.
+
+2.5 Instant Payments & Consent Validation
+
+✅ PSD2-009: Ensure an instant pain.001 payment is processed only if explicit consent is provided.
+❌ PSD2-010: Attempt an unauthorized instant payment request and verify rejection.
+
+3. Basel III Compliance (Capital & Liquidity Risk)
+
+Objective: Ensure ISO 20022 messages support regulatory reporting, liquidity risk management, and stress testing.
+
+3.1 Liquidity Coverage Ratio (LCR) Reporting
+
+✅ B3-001: Validate a camt.052 (intraday balance report) showing LCR compliance.
+❌ B3-002: Detect an LCR below the 100% minimum requirement and trigger a regulatory alert.
+
+3.2 Net Stable Funding Ratio (NSFR) Monitoring
+
+✅ B3-003: Process a camt.053 (end-of-day statement) showing stable funding sources.
+❌ B3-004: Identify an NSFR shortfall (below 100%) and ensure system flagging.
+
+3.3 Large Exposure Limits
+
+✅ B3-005: Process a pacs.009 (high-value payment) where exposure remains below regulatory thresholds.
+❌ B3-006: Attempt a payment causing exposure to exceed the 25% of capital limit and verify rejection.
+
+3.4 Stress Testing & Liquidity Shock Scenarios
+
+❌ B3-007: Simulate a bank run scenario and ensure proper camt.052 liquidity reporting.
+❌ B3-008: Test a market stress event with multiple liquidity shocks and validate capital adequacy reporting.

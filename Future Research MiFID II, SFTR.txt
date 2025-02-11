@@ -1,0 +1,8 @@
+Test Cases to define in the future
+
+Test suite ensures ISO 20022 like test cases for MiFID II, SFTR, 
+
+
+or other regulatory frameworks?
+
+What other regulatory frameworks are there…?

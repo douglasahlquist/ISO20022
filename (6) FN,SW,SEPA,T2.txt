@@ -1,0 +1,100 @@
+(6) Here’s an expanded set of ISO 20022 test cases for FedNow, SWIFT CBPR+, SEPA, and TARGET2, covering key scenarios for each system’s compliance certification.
+
+1. FedNow (U.S. Real-Time Payments)
+
+Objective: Ensure compliance with ISO 20022-based FedNow instant payment processing in the U.S.
+
+1.1 Instant Payment Processing
+
+✅ FN-001: Process a valid pacs.008 (credit transfer) within 2 seconds as per FedNow SLA.
+❌ FN-002: Attempt to process a payment beyond the FedNow cut-off time and ensure rejection.
+❌ FN-003: Send a transaction with an incorrect FedNow Participant ID and verify failure.
+
+1.2 Request for Payment (RTP)
+
+✅ FN-004: Process a correct pain.013 (request for payment) and ensure the payer receives a valid request.
+❌ FN-005: Attempt an RTP without valid payer consent and verify rejection.
+
+1.3 Fraud & Risk Controls
+
+✅ FN-006: Process a low-value instant payment under risk limits successfully.
+❌ FN-007: Attempt a high-risk transaction exceeding daily limits and verify system flags.
+❌ FN-008: Simulate a duplicate payment within a short window and ensure rejection.
+
+1.4 Payment Acknowledgment & Reversal
+
+✅ FN-009: Validate correct generation of pacs.002 (payment status) upon success.
+❌ FN-010: Simulate a failed payment and ensure proper error handling with pacs.002 (RJCT).
+✅ FN-011: Test a camt.056 (payment cancellation request) before final settlement.
+
+2. SWIFT CBPR+ (Cross-Border Payments and Reporting)
+
+Objective: Ensure compliance with SWIFT ISO 20022 Cross-Border Payments and Reporting (CBPR+).
+
+2.1 FI-to-FI Payment Processing
+
+✅ SW-001: Process a valid pacs.008 (FI to FI credit transfer) under SWIFT CBPR+ rules.
+❌ SW-002: Send a pacs.008 with incorrect UETR (Unique End-to-End Transaction Reference) and verify rejection.
+
+2.2 Cover Payments & Intermediary Banks
+
+✅ SW-003: Process a pacs.009 (cover payment) through an intermediary bank successfully.
+❌ SW-004: Attempt a pacs.009 with missing intermediary details and ensure system rejection.
+
+2.3 Payment Investigations & Returns
+
+✅ SW-005: Process a camt.027 (claim non-receipt) for a delayed transaction.
+❌ SW-006: Send a camt.029 (unable to apply) response for an invalid incoming payment.
+
+2.4 SWIFT GPI Compliance
+
+✅ SW-007: Ensure the UETR is correctly generated and trackable in SWIFT GPI.
+❌ SW-008: Simulate a missing UETR and verify system rejection.
+
+3. SEPA (Single Euro Payments Area)
+
+Objective: Ensure compliance with ISO 20022-based SEPA payment schemes (SCT, SCT Inst, SDD).
+
+3.1 SEPA Credit Transfers (SCT)
+
+✅ SEPA-001: Process a valid pain.001 (SEPA credit transfer) and ensure correct execution.
+❌ SEPA-002: Send a pain.001 with an invalid BIC or IBAN and verify rejection.
+
+3.2 SEPA Instant Credit Transfers (SCT Inst)
+
+✅ SEPA-003: Process an instant SEPA payment in under 10 seconds.
+❌ SEPA-004: Attempt an SCT Inst payment to a non-participating bank and verify system rejection.
+
+3.3 SEPA Direct Debit (SDD)
+
+✅ SEPA-005: Process a valid pain.008 (SEPA direct debit) successfully.
+❌ SEPA-006: Attempt an SDD transaction without a valid mandate ID and verify failure.
+
+3.4 Reversals & Refunds
+
+✅ SEPA-007: Process a pacs.004 (payment return) for an incorrect SCT transaction.
+❌ SEPA-008: Attempt to refund a settled SEPA Direct Debit and confirm system rejection.
+
+4. TARGET2 (EU Interbank Payment System)
+
+Objective: Ensure compliance with ISO 20022-based TARGET2 real-time gross settlement (RTGS) processing.
+
+4.1 High-Value Payment Processing
+
+✅ T2-001: Process a high-value payment through pacs.009 (TARGET2 RTGS transfer).
+❌ T2-002: Send a pacs.009 with an incorrect TARGET2 participant ID and verify failure.
+
+4.2 Liquidity Management
+
+✅ T2-003: Validate a camt.052 (intraday balance report) showing real-time liquidity.
+❌ T2-004: Simulate a liquidity shortfall and ensure system flags for insufficient funds.
+
+4.3 Payment Prioritization & Urgency
+
+✅ T2-005: Process an urgent payment marked as HIGH priority.
+❌ T2-006: Attempt a low-priority payment with an insufficient balance and verify rejection.
+
+4.4 Payment Cancellation & Reversals
+
+✅ T2-007: Successfully process a camt.056 (payment cancellation request) before final settlement.
+❌ T2-008: Attempt to cancel a fully settled payment and confirm rejection.

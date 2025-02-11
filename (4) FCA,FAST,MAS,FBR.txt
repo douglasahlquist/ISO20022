@@ -1,0 +1,63 @@
+(4) Here’s an expanded ISO 20022 test suite to validate compliance with FCA UK, MAS Singapore, and FRB U.S. regulations.
+
+1. FCA UK (Financial Conduct Authority)
+
+Objective: Ensure compliance with UK payment regulations, including AML, PSD2, and Faster Payments (FPS).
+
+1.1 Strong Customer Authentication (SCA) & Open Banking
+
+✅ FCA-001: Process a pain.001 (credit transfer) using SCA-compliant multi-factor authentication.
+❌ FCA-002: Attempt a payment without SCA and verify rejection.
+
+1.2 Faster Payments (FPS) Compliance
+
+✅ FCA-003: Process a pacs.008 through FPS within 15 seconds.
+❌ FCA-004: Simulate an FPS transaction that exceeds the £1M limit and verify rejection.
+
+1.3 AML & Suspicious Activity Reporting (SAR)
+
+✅ FCA-005: Identify a low-risk FPS transaction that proceeds successfully.
+❌ FCA-006: Detect and report a pacs.008 involving a UK Politically Exposed Person (PEP).
+
+1.4 Fraud Prevention & Consumer Protection
+
+✅ FCA-007: Process a pacs.002 (payment status) for a refund request under UK consumer protection laws.
+❌ FCA-008: Attempt a push payment fraud scenario (APP fraud) and ensure rejection.
+
+2. MAS Singapore (Monetary Authority of Singapore)
+
+Objective: Ensure compliance with MAS AML, FAST (Fast and Secure Transfers), and liquidity requirements.
+
+2.1 FAST Payments Compliance
+
+✅ MAS-001: Process a pacs.008 instant payment under FAST system rules.
+❌ MAS-002: Attempt a payment above the S$200,000 FAST limit and verify rejection.
+
+2.2 AML & Counter-Terrorism Financing (CTF)
+
+✅ MAS-003: Process a camt.052 (account statement) showing normal transaction activity.
+❌ MAS-004: Detect a pacs.008 payment to a flagged high-risk jurisdiction (e.g., North Korea).
+
+2.3 MAS Liquidity Risk Management
+
+✅ MAS-005: Validate camt.053 (daily balance report) meeting MAS liquidity coverage requirements.
+❌ MAS-006: Simulate a liquidity stress event and verify NSFR compliance.
+
+3. FRB U.S. (Federal Reserve Board)
+
+Objective: Ensure ISO 20022 compliance for FedNow, wire transfers, and regulatory reporting.
+
+3.1 FedNow Instant Payment Processing
+
+✅ FRB-001: Process a pacs.008 (FedNow transfer) within 2 seconds.
+❌ FRB-002: Attempt a FedNow payment beyond the service window cutoff and verify rejection.
+
+3.2 ACH & Wire Transfer Compliance
+
+✅ FRB-003: Process a pain.001 (ACH credit transfer) meeting NACHA requirements.
+❌ FRB-004: Send a wire payment via pacs.009 with an incorrect ABA routing number and verify rejection.
+
+3.3 FRB AML & Suspicious Activity Monitoring
+
+✅ FRB-005: Successfully process a low-risk cross-border wire payment.
+❌ FRB-006: Detect an unusual high-value ACH transfer exceeding FRB thresholds and flag for review.
